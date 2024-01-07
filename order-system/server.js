@@ -40,7 +40,20 @@ const Order = sequelize.define('Order', {
   },
 });
 
-// Sync the model with the database
+// Define the "Customer" model with all data elements
+const Customer = sequelize.define('Customer', {
+  // Add other customer fields here
+  companyCode: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  companyName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
+});
+
+// Sync the models with the database
 sequelize.sync();
 
 // Create a new order
@@ -111,6 +124,102 @@ app.delete('/api/orders/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting order:', error.message);
     res.status(500).json({ error: 'Error deleting order' });
+  }
+});
+
+// Create a new customer
+app.post('/api/customers', async (req, res) => {
+  try {
+    const customer = await Customer.create(req.body);
+    res.status(201).json(customer);
+  } catch (error) {
+    console.error('Error creating customer:', error.message);
+    res.status(500).json({ error: 'Error creating customer' });
+  }
+});
+
+// Retrieve all customers
+app.get('/api/customers', async (req, res) => {
+  try {
+    const customers = await Customer.findAll();
+    res.json(customers);
+  } catch (error) {
+    console.error('Error fetching customers:', error.message);
+    res.status(500).json({ error: 'Error fetching customers' });
+  }
+});
+
+// Retrieve a single customer by ID or Customer Code
+app.get('/api/customers/:identifier', async (req, res) => {
+  const { identifier } = req.params;
+  try {
+    let customer;
+    if (!isNaN(identifier)) {
+      // If identifier is a number, assume it's an ID
+      customer = await Customer.findByPk(identifier);
+    } else {
+      // Otherwise, search by Customer Code
+      customer = await Customer.findOne({
+        where: { companyCode: identifier },
+      });
+    }
+
+    if (!customer) {
+      return res.status(404).json({ error: 'Customer not found' });
+    }
+    
+    res.json(customer);
+  } catch (error) {
+    console.error('Error fetching customer by ID or Customer Code:', error.message);
+    res.status(500).json({ error: 'Error fetching customer by ID or Customer Code' });
+  }
+});
+
+
+// Update an existing customer by ID or Customer Code
+app.put('/api/customers/:identifier', async (req, res) => {
+  const { identifier } = req.params;
+  try {
+    let updatedRows;
+
+    if (!isNaN(identifier)) {
+      // If identifier is a number, assume it's an ID
+      updatedRows = await Customer.update(req.body, {
+        where: { id: identifier },
+      });
+    } else {
+      // Otherwise, update by Customer Code
+      updatedRows = await Customer.update(req.body, {
+        where: { companyCode: identifier },
+      });
+    }
+
+    if (updatedRows[0] === 0) {
+      return res.status(404).json({ error: 'Customer not found' });
+    }
+
+    res.json({ message: 'Customer updated successfully' });
+  } catch (error) {
+    console.error('Error updating customer:', error.message);
+    res.status(500).json({ error: 'Error updating customer' });
+  }
+});
+
+
+// Delete a customer
+app.delete('/api/customers/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedRowCount = await Customer.destroy({
+      where: { id },
+    });
+    if (deletedRowCount === 0) {
+      return res.status(404).json({ error: 'Customer not found' });
+    }
+    res.json({ message: 'Customer deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting customer:', error.message);
+    res.status(500).json({ error: 'Error deleting customer' });
   }
 });
 

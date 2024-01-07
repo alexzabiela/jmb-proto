@@ -5,7 +5,10 @@ function Home() {
   return (
     <div>
       <h1>Welcome to the Order System</h1>
-      <Link to="/orders">View Orders</Link>
+      <ul>
+      <li><Link to="/orders">Manage Orders</Link></li>
+      <li><Link to="/customers">Manage Customers</Link></li>
+      </ul>
     </div>
   );
 }

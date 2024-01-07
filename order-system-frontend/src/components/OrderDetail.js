@@ -17,7 +17,12 @@ function OrderDetail() {
   });
 
   useEffect(() => {
-    axios.get(`/api/orders/${id}`)
+    const api = axios.create({
+      baseURL: 'http://localhost:3001', // Update the base URL to match your backend
+    });
+
+    api
+      .get(`/api/orders/${id}`)
       .then((response) => {
         setOrder(response.data);
       })
@@ -29,7 +34,7 @@ function OrderDetail() {
   return (
     <div>
       <h2>Order Details</h2>
-      <Link to="/">Go to Home</Link>
+      <Link to="/orders">Go to Order List</Link>
       <div>
         <label>Order Name:</label>
         <span>{order.orderName}</span>

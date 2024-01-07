@@ -48,11 +48,13 @@ function OrderList() {
               <td>{order.taskQuantity}</td>
               <td>{order.batchCode}</td>
               <td>{order.salesOrder}</td>
-              <td>{order.customerCode}</td>
+              <td>
+                <Link to={`/customers/${order.customerCode || ''}`}>{order.customerCode}</Link>
+              </td>
               <td>{order.deadline}</td>
               <td>{order.startDate}</td>
               <td>
-              <Link to={`/orders/${order.id || ''}`}>View</Link>
+                <Link to={`/orders/${order.id || ''}`}>View</Link>
               </td>
             </tr>
           ))}
