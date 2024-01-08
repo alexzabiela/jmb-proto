@@ -36,7 +36,7 @@ function CreateCustomer() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Create Customer</h2>
       <form onSubmit={handleSubmit}>
         <div>

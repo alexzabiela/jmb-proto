@@ -49,9 +49,10 @@ function CustomerDetail() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Customer Details</h2>
       <Link to="/customers">Go to Customer List</Link>
+      <div className='container'>
       <div>
         <label>Company Code:</label>
         <span>{customer.companyCode}</span>
@@ -64,6 +65,7 @@ function CustomerDetail() {
       <div>
         <button onClick={handleEditClick}>Edit</button>
         <button onClick={handleDeleteClick}>Delete</button>
+      </div>
       </div>
     </div>
   );

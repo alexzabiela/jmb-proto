@@ -48,7 +48,7 @@ function CustomerEdit() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Edit Customer</h2>
       <Link to={`/customers/${id}`}>Back to Customer Details</Link>
       <form onSubmit={handleSubmit}>

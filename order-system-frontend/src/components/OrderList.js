@@ -21,7 +21,7 @@ function OrderList() {
   }, []);
 
   return (
-    <div>
+    <div className='container'>
       <h2>Order List</h2>
       <Link to="/create">Create New Order</Link>
       <table>

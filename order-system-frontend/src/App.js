@@ -8,11 +8,15 @@ import CustomerList from './components/CustomerList';
 import CreateCustomer from './components/CreateCustomer';
 import CustomerDetail from './components/CustomerDetail';
 import CustomerEdit from './components/CustomerEdit';
+import CreateProduct from './components/CreateProduct';
+import ProductDetail from './components/ProductDetail';
+import ProductEdit from './components/ProductEdit';
+import ProductList from './components/ProductList';
 
 function App() {
   return (
     <Router>
-      <nav>
+      <nav className='nav-container'>
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -22,6 +26,9 @@ function App() {
           </li>
           <li>
             <Link to="/customers">Customers</Link>
+          </li>
+          <li>
+            <Link to="/products">Products</Link>
           </li>
         </ul>
       </nav>
@@ -37,6 +44,13 @@ function App() {
         <Route path="/customers" element={<CustomerList />} />
         <Route path="/customers/edit/:id" element={<CustomerEdit />} />
         <Route path="/customers/edit/:companyCode" element={<CustomerEdit />} />
+        <Route path="/create-product" element={<CreateProduct />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/products/id/:id" element={<ProductDetail />} />
+        <Route path="/products/code/:code" element={<ProductDetail />} />
+        <Route path="/products" element={<ProductList />} />
+        <Route path="/products/edit/:id" element={<ProductEdit />} />
+        <Route path="/products/edit/:companyCode" element={<ProductEdit />} />
       </Routes>
     </Router>
   );

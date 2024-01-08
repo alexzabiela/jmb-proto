@@ -32,9 +32,10 @@ function OrderDetail() {
   }, [id]);
 
   return (
-    <div>
+    <div className='container'>
       <h2>Order Details</h2>
       <Link to="/orders">Go to Order List</Link>
+      <div className='container'>
       <div>
         <label>Order Name:</label>
         <span>{order.orderName}</span>
@@ -70,6 +71,7 @@ function OrderDetail() {
       <div>
         <label>Start Date:</label>
         <span>{order.startDate}</span>
+      </div>
       </div>
     </div>
   );

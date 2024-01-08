@@ -21,7 +21,7 @@ function CustomerList() {
   }, []);
 
   return (
-    <div>
+    <div className='container'>
       <h2>Customer List</h2>
       <Link to="/create-customer">Create New Customer</Link>
       <table>
@@ -30,6 +30,7 @@ function CustomerList() {
             <th>ID</th>
             <th>Company Code</th>
             <th>Company Name</th>
+            <th>Actions</th>
             {/* Add other customer fields here */}
           </tr>
         </thead>

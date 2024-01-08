@@ -48,7 +48,7 @@ function OrderForm() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Create Order</h2>
       <form onSubmit={handleSubmit}>
         <div>

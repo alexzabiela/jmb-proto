@@ -3,12 +3,19 @@ import { Link } from 'react-router-dom';
 
 function Home() {
   return (
-    <div>
+    <div className='container'>
       <h1>Welcome to the Order System</h1>
-      <ul>
-      <li><Link to="/orders">Manage Orders</Link></li>
-      <li><Link to="/customers">Manage Customers</Link></li>
-      </ul>
+      <div className="dashboard-container">
+        <div className="dashboard-item">
+          <Link to="/orders">Manage Orders</Link>
+        </div>
+        <div className="dashboard-item">
+          <Link to="/customers">Manage Customers</Link>
+        </div>
+        <div className="dashboard-item">
+          <Link to="/products">Manage Products</Link>
+        </div>
+      </div>
     </div>
   );
 }

@@ -53,6 +53,26 @@ const Customer = sequelize.define('Customer', {
   }
 });
 
+// Define the "Product" model with specified fields
+const Product = sequelize.define('Product', {
+  productName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  productCode: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  productPrice: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  productStockAvailability: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+});
+
 // Sync the models with the database
 sequelize.sync();
 
@@ -220,6 +240,77 @@ app.delete('/api/customers/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting customer:', error.message);
     res.status(500).json({ error: 'Error deleting customer' });
+  }
+});
+
+// Create a new product
+app.post('/api/products', async (req, res) => {
+  try {
+    const product = await Product.create(req.body);
+    res.status(201).json(product);
+  } catch (error) {
+    console.error('Error creating product:', error.message);
+    res.status(500).json({ error: 'Error creating product' });
+  }
+});
+
+// Retrieve all products
+app.get('/api/products', async (req, res) => {
+  try {
+    const products = await Product.findAll();
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error.message);
+    res.status(500).json({ error: 'Error fetching products' });
+  }
+});
+
+// Retrieve a single product by ID
+app.get('/api/products/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.findByPk(id);
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    res.json(product);
+  } catch (error) {
+    console.error('Error fetching product by ID:', error.message);
+    res.status(500).json({ error: 'Error fetching product by ID' });
+  }
+});
+
+// Update an existing product
+app.put('/api/products/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [updatedRows] = await Product.update(req.body, {
+      where: { id },
+    });
+    if (updatedRows === 0) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    res.json({ message: 'Product updated successfully' });
+  } catch (error) {
+    console.error('Error updating product:', error.message);
+    res.status(500).json({ error: 'Error updating product' });
+  }
+});
+
+// Delete a product
+app.delete('/api/products/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedRowCount = await Product.destroy({
+      where: { id },
+    });
+    if (deletedRowCount === 0) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    res.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting product:', error.message);
+    res.status(500).json({ error: 'Error deleting product' });
   }
 });
 
