@@ -70,7 +70,6 @@ function CustomerEdit() {
             onChange={handleChange}
           />
         </div>
-        {/* Add other customer fields here */}
         <div>
           <button type="submit">Save Changes</button>
         </div>
