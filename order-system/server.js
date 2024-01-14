@@ -113,6 +113,22 @@ app.get('/api/orders/:id', async (req, res) => {
   }
 });
 
+// Retrieve orders for a specific customer by Customer Code
+app.get('/api/orders/customer/:customerCode', async (req, res) => {
+  const { customerCode } = req.params;
+  try {
+    const orders = await Order.findAll({
+      where: { customerCode }, // Filter orders by customerCode
+    });
+    res.json(orders);
+  } catch (error) {
+    console.error('Error fetching customer orders:', error.message);
+    res.status(500).json({ error: 'Error fetching customer orders' });
+  }
+});
+
+
+
 // Update an existing order
 app.put('/api/orders/:id', async (req, res) => {
   const { id } = req.params;
